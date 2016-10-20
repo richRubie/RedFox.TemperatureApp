@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace RedFox.TermperatureApp
+namespace RedFox.TemperatureApp
 {
 	public class Startup
     {
@@ -44,6 +44,7 @@ namespace RedFox.TermperatureApp
 			});
 
 			app.UseMvc();
-        }
-    }
+			app.AddScoped<RedFox.>(_ => new SchoolContext(Configuration.GetConnectionString("DefaultConnection")));
+		}
+	}
 }

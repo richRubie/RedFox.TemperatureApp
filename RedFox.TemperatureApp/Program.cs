@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 
-namespace RedFox.TermperatureApp
+namespace RedFox.TemperatureApp
 {
 	public class Program
     {

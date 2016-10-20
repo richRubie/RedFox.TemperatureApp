@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "RedFox.TermperatureApp": {
+    "RedFox.TemperatureApp": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "http://localhost:5001/api/values",

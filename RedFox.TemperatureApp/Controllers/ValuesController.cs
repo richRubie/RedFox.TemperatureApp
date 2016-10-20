@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
-namespace RedFox.TermperatureApp.Controllers
+namespace RedFox.TemperatureApp.Controllers
 {
 	[Authorize]
 	[Route("api/[controller]")]
