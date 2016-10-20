@@ -35,7 +35,7 @@ namespace IdentityServer3.Host.Config
 					ClientSecrets = 
 						new List<Secret>
 						{
-							new Secret("secret".Sha256()),
+							new Secret("secret"),
 						},
 					AllowedScopes = new List<string>
 						{
