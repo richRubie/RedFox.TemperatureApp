@@ -10,8 +10,8 @@ namespace RedFox.TemperatureApp.Business
 			Database.SetInitializer(new CreateDatabaseIfNotExists<Context>());
 		}
 
-		public Context()
-			: base("Connection")
+		public Context(string connString)
+			: base(connString)
 		{
 		}
 

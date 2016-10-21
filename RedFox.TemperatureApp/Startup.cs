@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System.Linq;
 
 namespace RedFox.TemperatureApp
 {
@@ -25,26 +26,26 @@ namespace RedFox.TemperatureApp
         {
             // Add framework services.
             services.AddMvc();
-        }
+			services.AddScoped(_ => new Business.Context(Configuration.GetConnectionString("Connection")));
+		}
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-			string authorityUrl = Configuration.GetSection("AppSettings").GetValue<string>("AuthorityUrl");
+			string authorityUrl = Configuration.GetSection("AppSettings")["AuthorityUrl"];
 
 			app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
 			{
 				Authority = authorityUrl,
 				ScopeName = "api1",
-
+				
 				RequireHttpsMetadata = false
 			});
 
 			app.UseMvc();
-			app.AddScoped<RedFox.>(_ => new SchoolContext(Configuration.GetConnectionString("DefaultConnection")));
 		}
 	}
 }

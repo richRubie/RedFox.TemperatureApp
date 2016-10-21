@@ -2,18 +2,26 @@
 using Microsoft.AspNetCore.Mvc;
 using RedFox.TemperatureApp.Business;
 using System;
+using System.Threading.Tasks;
 
 namespace RedFox.TemperatureApp.Controllers
 {
 	[Authorize]
+	[Route("api/[controller]")]
 	public class TemperatureController : ControllerBase
 	{
-		public IActionResult Post(decimal temperature)
+		private readonly Context context;
+
+		public TemperatureController(Context context)
 		{
-			using (var context = new Context())
-			{
-				context.TemperatureLogs.Add(new TemperatureLog() { Temperature = temperature, LogDateTime = DateTime.UtcNow, });
-			}
+			this.context = context;
+		}
+
+		public async Task<IActionResult> Post([FromBody]decimal temperature)
+		{
+			context.TemperatureLogs.Add(new TemperatureLog() { Temperature = temperature, LogDateTime = DateTime.UtcNow, });
+
+			await context.SaveChangesAsync();
 
 			return Ok();
 		}

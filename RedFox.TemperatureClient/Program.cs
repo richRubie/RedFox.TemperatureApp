@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace RedFox.TemperatureClient
 {
@@ -28,20 +29,20 @@ namespace RedFox.TemperatureClient
 			}
 
 			Console.WriteLine(tokenResponse.Json);
-			Console.ReadLine();
 
 			// call api
 			var client = new HttpClient();
 			client.SetBearerToken(tokenResponse.AccessToken);
 
-			var response = await client.GetAsync("http://localhost:5001/api/values");
+			var temp = new { temperature= 6};
+
+			StringContent content = new StringContent(JsonConvert.SerializeObject(temp));
+			
+			var response = await client.PostAsync("http://localhost.fiddler:5001/api/temperature", content);
 			if (!response.IsSuccessStatusCode)
 			{
 				Console.WriteLine(response.StatusCode);
 			}
-
-			var content = response.Content.ReadAsStringAsync().Result;
-			Console.WriteLine(JArray.Parse(content));
 		}
 	}
 }
