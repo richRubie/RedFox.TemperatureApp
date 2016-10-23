@@ -17,9 +17,9 @@ namespace RedFox.TemperatureApp.Controllers
 			this.context = context;
 		}
 
-		public async Task<IActionResult> Post([FromBody]decimal temperature)
+		public async Task<IActionResult> Post([FromBody]Data data)
 		{
-			context.TemperatureLogs.Add(new TemperatureLog() { Temperature = temperature, LogDateTime = DateTime.UtcNow, });
+			context.TemperatureLogs.Add(new TemperatureLog() { Temperature = data.Temperature, LogDateTime = DateTime.UtcNow, });
 
 			await context.SaveChangesAsync();
 

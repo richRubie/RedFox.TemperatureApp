@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System.Linq;
+using NLog.Extensions.Logging;
 
 namespace RedFox.TemperatureApp
 {
@@ -24,6 +24,8 @@ namespace RedFox.TemperatureApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+			services.AddOptions();
+			services.Configure<AppOptions>(Configuration.GetSection("AppOptions"));
             // Add framework services.
             services.AddMvc();
 			services.AddScoped(_ => new Business.Context(Configuration.GetConnectionString("Connection")));
@@ -33,9 +35,12 @@ namespace RedFox.TemperatureApp
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+			loggerFactory.AddNLog();
             loggerFactory.AddDebug();
 
-			string authorityUrl = Configuration.GetSection("AppSettings")["AuthorityUrl"];
+			env.ConfigureNLog("nlog.config");
+
+			string authorityUrl = Configuration.GetSection("AppOptions")["AuthorityUrl"];
 
 			app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
 			{

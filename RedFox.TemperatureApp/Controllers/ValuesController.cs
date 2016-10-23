@@ -1,15 +1,21 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using System.Linq;
 
 namespace RedFox.TemperatureApp.Controllers
 {
-	[Authorize]
 	[Route("api/[controller]")]
     public class ValuesController : Controller
     {
-        // GET api/values
-        [HttpGet]
+		public ValuesController(IOptions<AppOptions> config)
+		{
+			Configuration = config;
+		}
+
+        public IOptions<AppOptions> Configuration { get; }
+
+		// GET api/values
+		[HttpGet]
         public IActionResult Get()
         {
 			return new JsonResult(from c in User.Claims select new { c.Type, c.Value });
@@ -19,7 +25,7 @@ namespace RedFox.TemperatureApp.Controllers
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            return "value";
+			return "values";
         }
 
         // POST api/values
