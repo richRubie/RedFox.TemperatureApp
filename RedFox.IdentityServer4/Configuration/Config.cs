@@ -1,8 +1,5 @@
 ﻿using IdentityServer4.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace RedFox.IdentityServer4.Configuration
 {
@@ -14,8 +11,8 @@ namespace RedFox.IdentityServer4.Configuration
 			{
 				new Scope
 				{
-					Name = "api1",
-					Description = "My API"
+					Name = "temperatureApi",
+					Description = "Temperature Api"
 				}
 			};
 		}
@@ -26,7 +23,7 @@ namespace RedFox.IdentityServer4.Configuration
 			{
 				new Client
 				{
-					ClientId = "client",
+					ClientId = "raspberryPiClient",
 
 					// no interactive user, use the clientid/secret for authentication
 					AllowedGrantTypes = GrantTypes.ClientCredentials,
@@ -34,11 +31,11 @@ namespace RedFox.IdentityServer4.Configuration
 					// secret for authentication
 					ClientSecrets =
 					{
-						new Secret("secret".Sha256())
+						new Secret("QChGXGOnjPBg7Xlf8S6m8tBavisAk2OG".Sha256())
 					},
 
 					// scopes that client has access to
-					AllowedScopes = { "api1" }
+					AllowedScopes = { "temperatureApi" }
 				}
 			};
 		}
