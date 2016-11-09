@@ -45,7 +45,7 @@ namespace RedFox.TemperatureApp
 			app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
 			{
 				Authority = authorityUrl,
-				ScopeName = "api1",
+				ScopeName = "temperatureApi", 
 				
 				RequireHttpsMetadata = false
 			});
