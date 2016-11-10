@@ -4,6 +4,7 @@ import requests
 import subprocess
 import json
 import configparser
+import Adafruit_DHT
 
 config = configparser.ConfigParser()
 config.readfp(open('defaults.cfg'))
@@ -12,9 +13,9 @@ config.read(['pi.cfg', 'local.cfg'])
 isRaspberryPi = config.getboolean('environment','isRaspberryPi')
 
 if isRaspberryPi:
-        tmp = float(subprocess.check_output(["/opt/vc/bin/vcgencmd","measure_temp"]).decode("utf-8").replace("temp=","").replace("'C\n","")) - 16.3
+	humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.AM2302, 10)
 else:
-	tmp = 6
+	temperature = 6
 
 authUrl = config.get('environment', 'authUrl')
 tempAppUrl = config.get('environment','tempAppUrl')
@@ -32,5 +33,5 @@ accessToken = dict['access_token']
 
 headers = {'Authorization':'Bearer '+accessToken, 'Content-Type':'application/json; charset=utf-8'}
 
-tempAppParams = {'Temperature':tmp}
+tempAppParams = {'Temperature':temperature}
 tempAppResponse =  requests.post(tempAppUrl, headers=headers, json=tempAppParams)
