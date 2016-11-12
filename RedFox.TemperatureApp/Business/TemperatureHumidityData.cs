@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace RedFox.TemperatureApp.Business
 {
-	public class TemperatureLog
+	public class TemperatureHumidityData
 	{
-		public int TemperatureLogId { get; set; }
+		public int TemperatureHumidityDataId { get; set; }
 		public decimal Temperature { get; set; }
 		public DateTime LogDateTime { get; set; }
+		public decimal Humidity { get; set; }
 	}
 }

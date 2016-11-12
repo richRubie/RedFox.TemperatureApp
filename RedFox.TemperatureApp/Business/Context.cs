@@ -1,5 +1,6 @@
-﻿using System.Data.Entity;
-using System.Data.Entity.ModelConfiguration.Conventions;
+﻿
+
+using Microsoft.EntityFrameworkCore;
 
 namespace RedFox.TemperatureApp.Business
 {
@@ -7,20 +8,18 @@ namespace RedFox.TemperatureApp.Business
 	{
 		static Context()
 		{
-			Database.SetInitializer(new CreateDatabaseIfNotExists<Context>());
+			//Database.SetInitializer(new MigrateDatabaseToLatestVersion<Context, Migrations.Configuration>());
 		}
 
-		public Context(string connString)
-			: base(connString)
+		public Context(DbContextOptions<Context> options)
+			: base(options)
 		{
 		}
 
-		public DbSet<TemperatureLog> TemperatureLogs { get; set; }
+		public DbSet<TemperatureHumidityData> TemperatureHumidityData { get; set; }
 
-		protected override void OnModelCreating(DbModelBuilder modelBuilder)
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-			modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-			modelBuilder.Configurations.Add(new TemperatureLogMap());
 		}
 	}
 }

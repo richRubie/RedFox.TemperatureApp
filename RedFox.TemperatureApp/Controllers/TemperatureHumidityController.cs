@@ -8,18 +8,23 @@ namespace RedFox.TemperatureApp.Controllers
 {
 	[Authorize]
 	[Route("api/[controller]")]
-	public class TemperatureController : ControllerBase
+	public class TemperatureHumidityController : ControllerBase
 	{
 		private readonly Context context;
 
-		public TemperatureController(Context context)
+		public TemperatureHumidityController(Context context)
 		{
 			this.context = context;
 		}
 
-		public async Task<IActionResult> Post([FromBody]Data data)
+		public async Task<IActionResult> Post([FromBody]TemperatureHumidityModel data)
 		{
-			context.TemperatureLogs.Add(new TemperatureLog() { Temperature = data.Temperature, LogDateTime = DateTime.UtcNow, });
+			context.TemperatureHumidityData.Add(
+				new TemperatureHumidityData() {
+					Humidity = data.Humidity,
+					Temperature = data.Temperature,
+					LogDateTime = DateTime.UtcNow,
+				});
 
 			await context.SaveChangesAsync();
 

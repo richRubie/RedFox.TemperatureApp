@@ -20,11 +20,11 @@ namespace RedFox.TemperatureClient
 		private static async Task RunAction()
 		{
 			var disco = await DiscoveryClient.GetAsync("https://redfox-app-identityserver.azurewebsites.net");
-			//var disco = await DiscoveryClient.GetAsync("http://localhost/redfox.identityserver/");
+			//var disco = await DiscoveryClient.GetAsync("http://localhost:5000/");
 			//var disco = await DiscoveryClient.GetAsync("http://localhost.fiddler:5000");
 
-			var tokenClient = new TokenClient(disco.TokenEndpoint, "client", "secret");
-			var tokenResponse = await tokenClient.RequestClientCredentialsAsync("api1");
+			var tokenClient = new TokenClient(disco.TokenEndpoint, "raspberryPiClient", "QChGXGOnjPBg7Xlf8S6m8tBavisAk2OG");
+			var tokenResponse = await tokenClient.RequestClientCredentialsAsync("temperatureApi");
 
 			if (tokenResponse.IsError)
 			{
@@ -38,13 +38,13 @@ namespace RedFox.TemperatureClient
 			var client = new HttpClient();
 			client.SetBearerToken(tokenResponse.AccessToken);
 
-			var temp = new { Temperature = 6 };
+			var temp = new { Temperature = 6, Humidity = 25 };
 
 			StringContent content = new StringContent(JsonConvert.SerializeObject(temp), Encoding.UTF8, "application/json");
 
-			var response = await client.PostAsync("https://redfox-app-temperatureapp.azurewebsites.net/api/temperature", content);
-			//var response = await client.PostAsync("http://localhost/redfox.temperatureapp/api/temperature", content);
-			//var response = await client.PostAsync("http://localhost.fiddler:5001/api/temperature", content);
+			var response = await client.PostAsync("https://redfox-app-temperatureapp.azurewebsites.net/api/temperaturehumidity", content);
+			//var response = await client.PostAsync("http://localhost:5001/api/temperaturehumidity", content);
+			//var response = await client.PostAsync("http://localhost.fiddler:5001/api/temperaturehumidity", content);
 			if (!response.IsSuccessStatusCode)
 			{
 				Console.WriteLine(response.StatusCode);

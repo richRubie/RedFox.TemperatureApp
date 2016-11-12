@@ -16,10 +16,10 @@ if isRaspberryPi:
 	humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.AM2302, 10)
 else:
 	temperature = 6
+	humidity = 8
 
 authUrl = config.get('environment', 'authUrl')
 tempAppUrl = config.get('environment','tempAppUrl')
-print(authUrl)
 
 client_id = config.get('authorisation', 'client_id')
 scope = config.get('authorisation', 'scope')
@@ -33,5 +33,5 @@ accessToken = dict['access_token']
 
 headers = {'Authorization':'Bearer '+accessToken, 'Content-Type':'application/json; charset=utf-8'}
 
-tempAppParams = {'Temperature':temperature}
+tempAppParams = {'Temperature':temperature, 'Humidity': humidity}
 tempAppResponse =  requests.post(tempAppUrl, headers=headers, json=tempAppParams)
