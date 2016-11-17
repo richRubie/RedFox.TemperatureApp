@@ -1,5 +1,7 @@
 ﻿using IdentityServer4.Models;
+using IdentityServer4.Services.InMemory;
 using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace RedFox.IdentityServer4.Configuration
 {
@@ -13,7 +15,10 @@ namespace RedFox.IdentityServer4.Configuration
 				{
 					Name = "temperatureApi",
 					Description = "Temperature Api"
-				}
+				},
+
+				StandardScopes.OpenId,
+				StandardScopes.Profile,
 			};
 		}
 
@@ -36,6 +41,59 @@ namespace RedFox.IdentityServer4.Configuration
 
 					// scopes that client has access to
 					AllowedScopes = { "temperatureApi" }
+				},
+				new Client
+				{
+					ClientId = "sensorweb",
+					ClientName = "Sensor web Client",
+					AllowedGrantTypes = GrantTypes.Implicit,
+					AllowAccessTokensViaBrowser = true,
+					// where to redirect to after login
+					RedirectUris = { "http://localhost:4200" },
+					AllowedCorsOrigins = new List<string>
+					{
+						"http://localhost:4200"
+					},
+
+					// where to redirect to after logout
+					PostLogoutRedirectUris = { "http://localhost:4200" },
+
+					AllowedScopes = new List<string>
+					{
+						StandardScopes.OpenId.Name,
+						StandardScopes.Profile.Name
+					}
+				},
+			};
+		}
+
+		public static List<InMemoryUser> GetUsers()
+		{
+			return new List<InMemoryUser>
+			{
+				new InMemoryUser
+				{
+					Subject = "1",
+					Username = "alice",
+					Password = "password",
+
+					Claims = new List<Claim>
+					{
+						new Claim("name", "Alice"),
+						new Claim("website", "https://alice.com")
+					}
+				},
+				new InMemoryUser
+				{
+					Subject = "2",
+					Username = "bob",
+					Password = "password",
+
+					Claims = new List<Claim>
+					{
+						new Claim("name", "Bob"),
+						new Claim("website", "https://bob.com")
+					}
 				}
 			};
 		}

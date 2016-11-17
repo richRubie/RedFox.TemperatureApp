@@ -1,0 +1,20 @@
+pi setup
+
+sudo apt-get dist-upgrade
+sudo apt-get update
+
+sudo apt-get install python3 python3-pip build-essential python-dev git
+
+git clone https://github.com/adafruit/Adafruit_Python_DHT.git
+cd Adafruit_Python_DHT
+sudo python setup.py install
+
+crontab -e
+	* * * * * /usr/bin/python3 /home/pi/pythonClient.py
+
+
+
+http://andrewtjohnson.me/2014/06/30/raspberry-pi-rsa-keypair-login-via-ssh/
+http://www.circuitbasics.com/raspberry-pi-wifi-installing-wifi-dongle/
+
+http://www.linux-projects.org/uv4l/installation/

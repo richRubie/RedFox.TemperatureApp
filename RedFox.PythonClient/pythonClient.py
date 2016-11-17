@@ -1,8 +1,7 @@
 #!/usr/bin/python
 
 import requests
-import subprocess
-import json
+# import json
 import configparser
 import Adafruit_DHT
 
@@ -13,7 +12,8 @@ config.read(['pi.cfg', 'local.cfg'])
 isRaspberryPi = config.getboolean('environment','isRaspberryPi')
 
 if isRaspberryPi:
-	humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.AM2302, 10)
+	gpioPin = config.getint('environment','gpioPin')
+	humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.AM2302, gpioPin)
 else:
 	temperature = 6
 	humidity = 8
@@ -28,8 +28,8 @@ client_secret = config.get('authorisation', 'client_secret')
 payload = {'grant_type':'client_credentials','scope':scope,'client_id':client_id,'client_secret':client_secret}
 
 authResponse = requests.post(authUrl, data=payload)
-dict = authResponse.json()
-accessToken = dict['access_token']
+responseDict = authResponse.json()
+accessToken = responseDict['access_token']
 
 headers = {'Authorization':'Bearer '+accessToken, 'Content-Type':'application/json; charset=utf-8'}
 
