@@ -1,6 +1,14 @@
-<h1>
-  {{title}}
-</h1>
-    <button (click)="login()">Login</button>
-    <button >Call API</button>
-    <button (click)="logout()">Logout</button>
+<h1>{{title}}</h1>
+    <button (click)="signin()">Login</button>
+    <button (click)="getData()">Call API</button>
+    <button (click)="signout()">Logout</button>
+
+<div *ngIf="datasets.length > 0">
+    <canvas baseChart
+      class="chart"
+      [datasets]="datasets"
+      [labels]="labels"
+      [options]="options"
+      [chartType]="'line'">
+    </canvas>
+</div>

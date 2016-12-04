@@ -1,29 +1,80 @@
 import { Component } from '@angular/core';
-import { UserManager } from "oidc-client";
+import { UserManager, OidcClient, Log } from "oidc-client";
+import { DataService } from "./data.service";
+import { Data } from "./data";
+import { BaseChartDirective } from "ng2-charts/ng2-charts";
+import { SecurityService } from "./security.service";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css']
 })
 
 export class AppComponent {
-  title = 'app works!';
+    constructor(private dataService: DataService, private securityService: SecurityService) { }
+    title = 'app works!';
+    data: Data[] = [];
 
-  config = {
-      authority: "http://localhost:5000",
-      client_id: "sensorweb",
-      redirect_uri: "http://localhost:4200",
-      response_type: "id_token token",
-      scope:"openid profile",
-      post_logout_redirect_uri : "http://localhost:4200",
-  };
-  mgr = new UserManager(this.config);
-    login(): void {
-    this.mgr.signinRedirect();
-  }
+    ngOnInit() {
+        console.log("ngOnInit _securityService.AuthorizedCallback");
 
-  logout(): void {
-    this.mgr.signoutRedirect();
-  }
+        if (window.location.hash) {
+            this.securityService.AuthorizedCallback();
+        }
+    }
+
+    signin(): void {
+        this.securityService.Authorize();
+    }
+    signout(): void {
+        this.securityService.Logoff();
+    }
+    getData(): void {
+        this.dataService.getData()
+            .then((data) => {
+                this.data = data;
+                this.labels = data.map(value => value.date);
+                this.datasets = [
+                    {
+                        label: "temperature",
+                        data: data.map(value => value.temperature),
+                        yAxisID: "left"
+                    },
+                    {
+                        label: "humidity",
+                        data: data.map(value => value.humidity),
+                        yAxisID: "right"
+                    }
+                ];
+            });
+    }
+
+    temperature: number[] = [];
+    humidity: number[] = [];
+    datasets: Array<any> = [];
+
+    labels: Array<Date> = [];
+
+    options = {
+        scales: {
+            yAxes: [{
+                id: "left",
+                position: "left",
+                ticks: {
+                    beginAtZero: true
+                }
+            },
+                {
+                    id: "right",
+                    position: "right",
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }],
+            xAxes: [{
+                type: 'time',
+            }]
+        }
+    };
 }

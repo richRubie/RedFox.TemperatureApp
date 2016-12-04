@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RedFox.TemperatureApp.Business;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace RedFox.TemperatureApp.Controllers
@@ -17,6 +19,7 @@ namespace RedFox.TemperatureApp.Controllers
 			this.context = context;
 		}
 
+		[HttpPost]
 		public async Task<IActionResult> Post([FromBody]TemperatureHumidityModel data)
 		{
 			context.TemperatureHumidityData.Add(
@@ -29,6 +32,14 @@ namespace RedFox.TemperatureApp.Controllers
 			await context.SaveChangesAsync();
 
 			return Ok();
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> Get()
+		{
+			var results = await context.TemperatureHumidityData.OrderByDescending(d => d.LogDateTime).Take(10).ToListAsync();
+
+			return Ok(results);
 		}
 	}
 }
