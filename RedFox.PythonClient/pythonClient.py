@@ -18,6 +18,8 @@ else:
 	temperature = 6
 	humidity = 8
 
+location = config.get('environment','location');
+
 authUrl = config.get('environment', 'authUrl')
 tempAppUrl = config.get('environment','tempAppUrl')
 
@@ -33,5 +35,5 @@ accessToken = responseDict['access_token']
 
 headers = {'Authorization':'Bearer '+accessToken, 'Content-Type':'application/json; charset=utf-8'}
 
-tempAppParams = {'Temperature':temperature, 'Humidity': humidity}
+tempAppParams = {'Temperature':temperature, 'Humidity': humidity, 'Location': location}
 tempAppResponse =  requests.post(tempAppUrl, headers=headers, json=tempAppParams)

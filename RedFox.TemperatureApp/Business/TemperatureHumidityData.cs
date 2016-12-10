@@ -8,5 +8,6 @@ namespace RedFox.TemperatureApp.Business
 		public decimal Temperature { get; set; }
 		public DateTime LogDateTime { get; set; }
 		public decimal Humidity { get; set; }
+		public string Location { get; set; }
 	}
 }

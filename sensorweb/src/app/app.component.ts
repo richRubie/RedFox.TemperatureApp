@@ -62,14 +62,14 @@ export class AppComponent {
                 id: "left",
                 position: "left",
                 ticks: {
-                    beginAtZero: true
+                    beginAtZero: false
                 }
             },
                 {
                     id: "right",
                     position: "right",
                     ticks: {
-                        beginAtZero: true
+                        beginAtZero: false
                     }
                 }],
             xAxes: [{

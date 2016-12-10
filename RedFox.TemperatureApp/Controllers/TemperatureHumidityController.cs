@@ -37,7 +37,7 @@ namespace RedFox.TemperatureApp.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Get()
 		{
-			var results = await context.TemperatureHumidityData.OrderByDescending(d => d.LogDateTime).Take(10).ToListAsync();
+			var results = await context.TemperatureHumidityData.OrderByDescending(d => d.LogDateTime).Take(1000).ToListAsync();
 
 			return Ok(results);
 		}

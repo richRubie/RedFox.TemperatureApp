@@ -38,7 +38,7 @@ namespace RedFox.TemperatureClient
 			var client = new HttpClient();
 			client.SetBearerToken(tokenResponse.AccessToken);
 
-			var temp = new { Temperature = 6, Humidity = 25 };
+			var temp = new { Temperature = 6, Humidity = 25, Location = "Fake" };
 
 			StringContent content = new StringContent(JsonConvert.SerializeObject(temp), Encoding.UTF8, "application/json");
 
