@@ -1,0 +1,11 @@
+<div *ngIf="hasData > 0">
+        <canvas baseChart
+        class="chart"
+        [datasets]="datasets"
+        [labels]="labels"
+        [options]="options"
+        [chartType]="'line'">
+        </canvas>
+</div>
+
+<button (click)="getData()">Refresh</button>

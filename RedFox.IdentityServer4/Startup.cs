@@ -29,8 +29,8 @@ namespace RedFox.IdentityServer4
 
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
             }
+                app.UseDeveloperExceptionPage();
 
 			app.UseIdentityServer();
 
@@ -54,10 +54,10 @@ namespace RedFox.IdentityServer4
 			app.UseStaticFiles();
 			app.UseMvcWithDefaultRoute();
 
-			app.Run(async (context) =>
-            {
-                await context.Response.WriteAsync("Hello World!");
-            });
+			//app.Run(async (context) =>
+   //         {
+   //             await context.Response.WriteAsync("Hello World!");
+   //         });
         }
     }
 }

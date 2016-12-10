@@ -9,7 +9,8 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class DataService {
 
-  private dataUrl = 'http://localhost:5001/api/temperaturehumidity';  // URL to web api
+  // private dataUrl = 'http://localhost:5001/api/temperaturehumidity';  // URL to web api
+  private dataUrl = 'https://redfox-app-temperatureapp.azurewebsites.net/api/temperaturehumidity';  // URL to web api
 
   constructor(private http: Http, private securityService: SecurityService) { }
   getData(): Promise<Data[]> {
@@ -36,10 +37,6 @@ export class DataService {
 
   private getHeaders(): Headers {
       var headers = new Headers();
-      // headers.append('Content-Type', 'application/json');
-      // headers.append('Accept', 'application/json');
-      // headers.append('Test', 'whoop');
-
 
       var token = this.securityService.GetToken();
 

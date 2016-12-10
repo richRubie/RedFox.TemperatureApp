@@ -6,10 +6,14 @@ import { AppComponent } from './app.component';
 import { DataService } from './data.service';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { SecurityService } from './security.service';
+import { LoginComponent } from './login/login.component';
+import { GraphComponent } from './graph/graph.component';
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        LoginComponent,
+        GraphComponent
     ],
     imports: [
         BrowserModule,
