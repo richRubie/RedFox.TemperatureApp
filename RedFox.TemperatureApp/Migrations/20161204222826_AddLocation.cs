@@ -13,7 +13,7 @@ namespace RedFox.TemperatureApp.Migrations
                 table: "TemperatureHumidityData",
                 nullable: true);
 
-			migrationBuilder.Sql("update TemperatureHumidityData set Location = 'Nursery'");
+			migrationBuilder.Sql("update TemperatureHumidityData set Location = 'nursery'");
 
 			migrationBuilder.AlterColumn<string>(
 				name: "Location", 

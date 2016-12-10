@@ -26,6 +26,7 @@ namespace RedFox.TemperatureApp.Controllers
 				new TemperatureHumidityData() {
 					Humidity = data.Humidity,
 					Temperature = data.Temperature,
+					Location = data.Location,
 					LogDateTime = DateTime.UtcNow,
 				});
 

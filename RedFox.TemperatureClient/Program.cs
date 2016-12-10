@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 namespace RedFox.TemperatureClient
 {
 	public class Program
-    {
-        public static void Main(string[] args)
-        {
+	{
+		public static void Main(string[] args)
+		{
 			Thread.Sleep(5000);
 			Task.Run(() => RunAction()).Wait();
 			Console.ReadLine();
@@ -19,8 +19,8 @@ namespace RedFox.TemperatureClient
 
 		private static async Task RunAction()
 		{
-			var disco = await DiscoveryClient.GetAsync("https://redfox-app-identityserver.azurewebsites.net");
-			//var disco = await DiscoveryClient.GetAsync("http://localhost:5000/");
+			//var disco = await DiscoveryClient.GetAsync("https://redfox-app-identityserver.azurewebsites.net");
+			var disco = await DiscoveryClient.GetAsync("http://localhost:5000/");
 			//var disco = await DiscoveryClient.GetAsync("http://localhost.fiddler:5000");
 
 			var tokenClient = new TokenClient(disco.TokenEndpoint, "raspberryPiClient", "QChGXGOnjPBg7Xlf8S6m8tBavisAk2OG");
@@ -38,12 +38,12 @@ namespace RedFox.TemperatureClient
 			var client = new HttpClient();
 			client.SetBearerToken(tokenResponse.AccessToken);
 
-			var temp = new { Temperature = 6, Humidity = 25, Location = "Fake" };
+			var temp = new { Temperature = 6, Humidity = 25, Location = "fake" };
 
 			StringContent content = new StringContent(JsonConvert.SerializeObject(temp), Encoding.UTF8, "application/json");
 
-			var response = await client.PostAsync("https://redfox-app-temperatureapp.azurewebsites.net/api/temperaturehumidity", content);
-			//var response = await client.PostAsync("http://localhost:5001/api/temperaturehumidity", content);
+			//var response = await client.PostAsync("https://redfox-app-temperatureapp.azurewebsites.net/api/temperaturehumidity", content);
+			var response = await client.PostAsync("http://localhost:5001/api/temperaturehumidity", content);
 			//var response = await client.PostAsync("http://localhost.fiddler:5001/api/temperaturehumidity", content);
 			if (!response.IsSuccessStatusCode)
 			{
