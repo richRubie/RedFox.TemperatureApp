@@ -13,12 +13,14 @@ namespace RedFox.TemperatureClient
 		public static void Main(string[] args)
 		{
 			Thread.Sleep(5000);
+			//Console.ReadLine();
 			Task.Run(() => RunAction()).Wait();
 			Console.ReadLine();
 		}
 
 		private static async Task RunAction()
 		{
+			//await Testrun();
 			//var disco = await DiscoveryClient.GetAsync("https://redfox-app-identityserver.azurewebsites.net");
 			var disco = await DiscoveryClient.GetAsync("http://localhost:5000/");
 			//var disco = await DiscoveryClient.GetAsync("http://localhost.fiddler:5000");

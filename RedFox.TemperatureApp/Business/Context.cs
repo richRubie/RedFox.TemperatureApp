@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace RedFox.TemperatureApp.Business
 {
-	public class Context :  DbContext
+	public class Context : DbContext
 	{
 		static Context()
 		{

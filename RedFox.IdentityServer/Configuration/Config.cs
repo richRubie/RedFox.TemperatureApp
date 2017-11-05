@@ -1,29 +1,11 @@
 ﻿using IdentityServer4.Models;
-using IdentityServer4.Services.InMemory;
 using System.Collections.Generic;
-using System.Security.Claims;
 using static IdentityServer4.IdentityServerConstants;
 
-namespace RedFox.IdentityServer4.Configuration
+namespace RedFox.IdentityServer.Configuration
 {
 	public class Config
 	{
-		//public static IEnumerable<Scope> GetScopes()
-		//{
-		//	return new List<Scope>
-		//	{
-		//		new Scope
-		//		{
-		//			Name = "temperatureApi",
-		//			Description = "Temperature Api"
-		//		},
-
-		//		StandardScopes.OpenId,
-		//		StandardScopes.Profile,
-		//	};
-		//}
-
-
 		public static IEnumerable<Client> GetClients()
 		{
 			return new List<Client>
@@ -86,34 +68,12 @@ namespace RedFox.IdentityServer4.Configuration
 			};
 		}
 
-		public static List<InMemoryUser> GetUsers()
+		public static IEnumerable<ApiResource> GetApiResources()
 		{
-			return new List<InMemoryUser>
+			return new List<ApiResource>
 			{
-				new InMemoryUser
-				{
-					Subject = "1",
-					Username = "alice",
-					Password = "password",
-
-					Claims = new List<Claim>
-					{
-						new Claim("name", "Alice"),
-						new Claim("website", "https://alice.com")
-					}
-				},
-				new InMemoryUser
-				{
-					Subject = "2",
-					Username = "bob",
-					Password = "password",
-
-					Claims = new List<Claim>
-					{
-						new Claim("name", "Bob"),
-						new Claim("website", "https://bob.com")
-					}
-				}
+				new ApiResource("api1", "My API"),
+				new ApiResource("temperatureApi", "Temperature Api")
 			};
 		}
 	}
