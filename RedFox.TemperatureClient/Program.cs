@@ -13,15 +13,13 @@ namespace RedFox.TemperatureClient
 		public static void Main(string[] args)
 		{
 			Thread.Sleep(5000);
-			//Console.ReadLine();
 			Task.Run(() => RunAction()).Wait();
 			Console.ReadLine();
 		}
 
 		private static async Task RunAction()
 		{
-			//await Testrun();
-			//var disco = await DiscoveryClient.GetAsync("https://redfox-app-identityserver.azurewebsites.net");
+			//var disco = await DiscoveryClient.GetAsync("https://redfoxidentityserver.azurewebsites.net/");
 			var disco = await DiscoveryClient.GetAsync("http://localhost:5000/");
 			//var disco = await DiscoveryClient.GetAsync("http://localhost.fiddler:5000");
 
@@ -44,7 +42,7 @@ namespace RedFox.TemperatureClient
 
 			StringContent content = new StringContent(JsonConvert.SerializeObject(temp), Encoding.UTF8, "application/json");
 
-			//var response = await client.PostAsync("https://redfox-app-temperatureapp.azurewebsites.net/api/temperaturehumidity", content);
+			//var response = await client.PostAsync("https://redfoxtemperatureapp.azurewebsites.net/api/temperaturehumidity", content);
 			var response = await client.PostAsync("http://localhost:5001/api/temperaturehumidity", content);
 			//var response = await client.PostAsync("http://localhost.fiddler:5001/api/temperaturehumidity", content);
 			if (!response.IsSuccessStatusCode)
